@@ -40,6 +40,21 @@
             txtID = new TextBox();
             label3 = new Label();
             label4 = new Label();
+            txtAccountName = new TextBox();
+            txtBrandName = new TextBox();
+            label5 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            txtSearchBrand = new TextBox();
+            label8 = new Label();
+            btnSearch = new Button();
+            btnShowAll = new Button();
+            txtBankAccountID = new TextBox();
+            label9 = new Label();
+            txtOpenDate = new TextBox();
+            txtTypeID = new TextBox();
+            label10 = new Label();
+            label11 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvListStudent).BeginInit();
             SuspendLayout();
             // 
@@ -63,6 +78,7 @@
             dgvListStudent.TabIndex = 1;
             dgvListStudent.CellContentClick += dgvListStudent_CellContentClick;
             dgvListStudent.CellDoubleClick += dgvListStudent_CellDoubleClick;
+            dgvListStudent.CellMouseClick += dgvListStudent_CellMouseClick;
             // 
             // txtName
             // 
@@ -70,7 +86,6 @@
             txtName.Name = "txtName";
             txtName.Size = new Size(312, 23);
             txtName.TabIndex = 2;
-            txtName.TextChanged += txtName_TextChanged;
             // 
             // txtAge
             // 
@@ -149,17 +164,160 @@
             label4.AutoSize = true;
             label4.BackColor = Color.LightGray;
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(140, 46);
+            label4.Location = new Point(12, 46);
             label4.Name = "label4";
             label4.Size = new Size(98, 15);
             label4.TabIndex = 11;
             label4.Text = "Student Manager";
             // 
+            // txtAccountName
+            // 
+            txtAccountName.Location = new Point(492, 307);
+            txtAccountName.Name = "txtAccountName";
+            txtAccountName.Size = new Size(163, 23);
+            txtAccountName.TabIndex = 13;
+            // 
+            // txtBrandName
+            // 
+            txtBrandName.Location = new Point(492, 336);
+            txtBrandName.Name = "txtBrandName";
+            txtBrandName.Size = new Size(163, 23);
+            txtBrandName.TabIndex = 14;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(401, 307);
+            label5.Name = "label5";
+            label5.Size = new Size(85, 15);
+            label5.TabIndex = 17;
+            label5.Text = "Account name";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(401, 336);
+            label6.Name = "label6";
+            label6.Size = new Size(71, 15);
+            label6.TabIndex = 18;
+            label6.Text = "Brand name";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.Red;
+            label7.Location = new Point(253, 46);
+            label7.Name = "label7";
+            label7.Size = new Size(131, 15);
+            label7.TabIndex = 19;
+            label7.Text = "Bank Account Manager";
+            // 
+            // txtSearchBrand
+            // 
+            txtSearchBrand.Location = new Point(457, 243);
+            txtSearchBrand.Name = "txtSearchBrand";
+            txtSearchBrand.Size = new Size(231, 23);
+            txtSearchBrand.TabIndex = 20;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(457, 225);
+            label8.Name = "label8";
+            label8.Size = new Size(127, 15);
+            label8.TabIndex = 21;
+            label8.Text = "Search by Brand Name";
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(694, 243);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(75, 23);
+            btnSearch.TabIndex = 22;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // btnShowAll
+            // 
+            btnShowAll.Location = new Point(694, 214);
+            btnShowAll.Name = "btnShowAll";
+            btnShowAll.Size = new Size(75, 23);
+            btnShowAll.TabIndex = 23;
+            btnShowAll.Text = "Show All";
+            btnShowAll.UseVisualStyleBackColor = true;
+            btnShowAll.Click += btnShowAll_Click;
+            // 
+            // txtBankAccountID
+            // 
+            txtBankAccountID.Location = new Point(492, 278);
+            txtBankAccountID.Name = "txtBankAccountID";
+            txtBankAccountID.ReadOnly = true;
+            txtBankAccountID.Size = new Size(163, 23);
+            txtBankAccountID.TabIndex = 24;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(401, 281);
+            label9.Name = "label9";
+            label9.Size = new Size(18, 15);
+            label9.TabIndex = 25;
+            label9.Text = "ID";
+            // 
+            // txtOpenDate
+            // 
+            txtOpenDate.Location = new Point(492, 365);
+            txtOpenDate.Name = "txtOpenDate";
+            txtOpenDate.Size = new Size(163, 23);
+            txtOpenDate.TabIndex = 26;
+            // 
+            // txtTypeID
+            // 
+            txtTypeID.Location = new Point(492, 394);
+            txtTypeID.Name = "txtTypeID";
+            txtTypeID.ReadOnly = true;
+            txtTypeID.Size = new Size(163, 23);
+            txtTypeID.TabIndex = 27;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(401, 368);
+            label10.Name = "label10";
+            label10.Size = new Size(63, 15);
+            label10.TabIndex = 28;
+            label10.Text = "Open Date";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(401, 397);
+            label11.Name = "label11";
+            label11.Size = new Size(42, 15);
+            label11.TabIndex = 29;
+            label11.Text = "TypeID";
+            // 
             // Managerment
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(863, 450);
+            Controls.Add(label11);
+            Controls.Add(label10);
+            Controls.Add(txtTypeID);
+            Controls.Add(txtOpenDate);
+            Controls.Add(label9);
+            Controls.Add(txtBankAccountID);
+            Controls.Add(btnShowAll);
+            Controls.Add(btnSearch);
+            Controls.Add(label8);
+            Controls.Add(txtSearchBrand);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(txtBrandName);
+            Controls.Add(txtAccountName);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(txtID);
@@ -174,7 +332,6 @@
             Controls.Add(txtManagerment);
             Name = "Managerment";
             Text = "Managerment";
-            Load += Managerment_Load;
             ((System.ComponentModel.ISupportInitialize)dgvListStudent).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -194,5 +351,20 @@
         private TextBox txtID;
         private Label label3;
         private Label label4;
+        private TextBox txtAccountName;
+        private TextBox txtBrandName;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private TextBox txtSearchBrand;
+        private Label label8;
+        private Button btnSearch;
+        private Button btnShowAll;
+        private TextBox txtBankAccountID;
+        private Label label9;
+        private TextBox txtOpenDate;
+        private TextBox txtTypeID;
+        private Label label10;
+        private Label label11;
     }
 }

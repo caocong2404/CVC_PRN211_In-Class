@@ -1,4 +1,5 @@
-﻿using Services.Services;
+﻿using Services.Models;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,6 +60,27 @@ namespace WinFormsApp3
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
+            string name = txtAccountName.Text;
+            string brand = txtBrandName.Text;
+            int age = 0;
+            if (name.Length <= 0 || brand.Length <= 0)
+            {
+                MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
+                return;
+            }
+            var bankAccount = new BankAccount();
+            bankAccount.AccountName = name;
+            bankAccount.BranchName = brand;
+            bankAccount.OpenDate = DateTime.Now;
+
+            _bankAccountRepository.Add(bankAccount);
+            var bankAccountList = _bankAccountRepository.GetAll();
+
+            dgvListStudent.DataSource = new BindingSource()
+            {
+                DataSource = bankAccountList
+            };
+            /*
             string name = txtName.Text;
             int age = 0;
             if (txtAge.Text.Length <= 0 || txtName.Text.Length <= 0)
@@ -95,6 +117,8 @@ namespace WinFormsApp3
             {
                 DataSource = listStudent
             };
+            */
+
         }
 
         private int rowIndex { get; set; }
@@ -110,6 +134,22 @@ namespace WinFormsApp3
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show(
+                "Do you want do delete column?", 
+                "Confirm", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No) 
+            {
+                return;
+            }
+            var listAccount = _bankAccountRepository.GetAll();
+            var account = listAccount[rowIndex];
+            _bankAccountRepository.Delete(account);
+            MessageBox.Show("Delete successfull");
+            dgvListStudent.DataSource = new BindingSource()
+            {
+                DataSource = listAccount
+            };
+            /*
             listStudent.Remove(listStudent[rowIndex]);
 
             dgvListStudent.DataSource = new BindingSource()
@@ -118,7 +158,7 @@ namespace WinFormsApp3
             };
             txtName.Text = "";
             txtAge.Text = "";
-
+            */
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -206,16 +246,41 @@ namespace WinFormsApp3
             return result;
         }
 
-
-
-        private void txtName_TextChanged(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
+            string searchBrand = txtSearchBrand.Text;
+            if (searchBrand.Length > 0)
+            {
+                var bankAccountList = _bankAccountRepository.getAccountByBrand(searchBrand);
 
+                dgvListStudent.DataSource = new BindingSource()
+                {
+                    DataSource = bankAccountList
+                };
+            }
         }
 
-        private void Managerment_Load(object sender, EventArgs e)
+        private void btnShowAll_Click(object sender, EventArgs e)
         {
+            var listAccount = _bankAccountRepository.GetAll();
+            dgvListStudent.DataSource = new BindingSource()
+            {
+                DataSource = listAccount
+            };
+        }
 
+        private void dgvListStudent_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //chuột đang click ở dòng nào
+            rowIndex = e.RowIndex;
+            var account = _bankAccountRepository.GetAll()[e.RowIndex];
+            //_bankAccountRepository.Delete(account);
+
+            txtBankAccountID.Text = account.AccountId.ToString();
+            txtAccountName.Text = account.AccountName.ToString();
+            txtBrandName.Text = account.BranchName.ToString();
+            txtOpenDate.Text = account.OpenDate.ToString();
+            txtTypeID.Text = account.TypeId.ToString();
         }
     }
 }
