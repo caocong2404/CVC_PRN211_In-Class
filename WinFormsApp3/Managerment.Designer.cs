@@ -55,6 +55,8 @@
             txtTypeID = new TextBox();
             label10 = new Label();
             label11 = new Label();
+            label12 = new Label();
+            cBTypeName = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvListStudent).BeginInit();
             SuspendLayout();
             // 
@@ -174,14 +176,14 @@
             // 
             txtAccountName.Location = new Point(492, 307);
             txtAccountName.Name = "txtAccountName";
-            txtAccountName.Size = new Size(163, 23);
+            txtAccountName.Size = new Size(277, 23);
             txtAccountName.TabIndex = 13;
             // 
             // txtBrandName
             // 
             txtBrandName.Location = new Point(492, 336);
             txtBrandName.Name = "txtBrandName";
-            txtBrandName.Size = new Size(163, 23);
+            txtBrandName.Size = new Size(277, 23);
             txtBrandName.TabIndex = 14;
             // 
             // label5
@@ -253,7 +255,7 @@
             txtBankAccountID.Location = new Point(492, 278);
             txtBankAccountID.Name = "txtBankAccountID";
             txtBankAccountID.ReadOnly = true;
-            txtBankAccountID.Size = new Size(163, 23);
+            txtBankAccountID.Size = new Size(277, 23);
             txtBankAccountID.TabIndex = 24;
             // 
             // label9
@@ -269,15 +271,16 @@
             // 
             txtOpenDate.Location = new Point(492, 365);
             txtOpenDate.Name = "txtOpenDate";
-            txtOpenDate.Size = new Size(163, 23);
+            txtOpenDate.ReadOnly = true;
+            txtOpenDate.Size = new Size(277, 23);
             txtOpenDate.TabIndex = 26;
             // 
             // txtTypeID
             // 
-            txtTypeID.Location = new Point(492, 394);
+            txtTypeID.Location = new Point(49, 373);
             txtTypeID.Name = "txtTypeID";
             txtTypeID.ReadOnly = true;
-            txtTypeID.Size = new Size(163, 23);
+            txtTypeID.Size = new Size(335, 23);
             txtTypeID.TabIndex = 27;
             // 
             // label10
@@ -292,17 +295,39 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(401, 397);
+            label11.Location = new Point(12, 373);
             label11.Name = "label11";
-            label11.Size = new Size(42, 15);
+            label11.Size = new Size(31, 15);
             label11.TabIndex = 29;
-            label11.Text = "TypeID";
+            label11.Text = "Type";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(401, 397);
+            label12.Name = "label12";
+            label12.Size = new Size(44, 15);
+            label12.TabIndex = 30;
+            label12.Text = "label12";
+            // 
+            // cBTypeName
+            // 
+            cBTypeName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cBTypeName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cBTypeName.FormattingEnabled = true;
+            cBTypeName.Location = new Point(492, 394);
+            cBTypeName.Name = "cBTypeName";
+            cBTypeName.Size = new Size(277, 23);
+            cBTypeName.TabIndex = 31;
+            cBTypeName.SelectedIndexChanged += cBTypeName_SelectedIndexChanged;
             // 
             // Managerment
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(863, 450);
+            Controls.Add(cBTypeName);
+            Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(label10);
             Controls.Add(txtTypeID);
@@ -366,5 +391,7 @@
         private TextBox txtTypeID;
         private Label label10;
         private Label label11;
+        private Label label12;
+        private ComboBox cBTypeName;
     }
 }

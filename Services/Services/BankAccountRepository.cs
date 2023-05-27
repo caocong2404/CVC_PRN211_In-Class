@@ -3,6 +3,7 @@ using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsApp3;
@@ -40,15 +41,18 @@ namespace Services.Services
 
         public string autoGenerateID(string id)
         {
+            //ACCT0001
             string result = "";
-            string prefix = "ACCT";
+            int cutID = int.Parse(id.Substring(4, 4));
+            cutID++;
             int digits = 4;
-
+            string prefix = "ACCT";
+            
             // Convert the current ID to string with leading zeros
-            string idString = id.ToString().PadLeft(digits, '0');
+            string idString = cutID.ToString().PadLeft(digits, '0');
+            result = prefix + idString;
 
             // Combine the prefix and the formatted ID
-            result = prefix + idString;
             return result;
         }
 

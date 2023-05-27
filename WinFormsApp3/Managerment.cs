@@ -46,6 +46,10 @@ namespace WinFormsApp3
             {
                 DataSource = bankAccountList
             };
+
+            var listAccountType = _accountTypeRepository.GetAll();
+            cBTypeName.DataSource = listAccountType;
+            cBTypeName.DisplayMember = "TypeName";
         }
 
         private void txtManagerment_Click(object sender, EventArgs e)
@@ -62,7 +66,6 @@ namespace WinFormsApp3
         {
             string name = txtAccountName.Text;
             string brand = txtBrandName.Text;
-            int age = 0;
             if (name.Length <= 0 || brand.Length <= 0)
             {
                 MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
@@ -72,7 +75,10 @@ namespace WinFormsApp3
             bankAccount.AccountName = name;
             bankAccount.BranchName = brand;
             bankAccount.OpenDate = DateTime.Now;
-
+            AccountType accountType = cBTypeName.SelectedItem as AccountType;
+            
+                bankAccount.TypeId = accountType.TypeId;
+       
             _bankAccountRepository.Add(bankAccount);
             var bankAccountList = _bankAccountRepository.GetAll();
 
@@ -135,9 +141,9 @@ namespace WinFormsApp3
         private void btnDelete_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-                "Do you want do delete column?", 
+                "Do you want do delete column?",
                 "Confirm", MessageBoxButtons.YesNo);
-            if (result == DialogResult.No) 
+            if (result == DialogResult.No)
             {
                 return;
             }
@@ -145,6 +151,7 @@ namespace WinFormsApp3
             var account = listAccount[rowIndex];
             _bankAccountRepository.Delete(account);
             MessageBox.Show("Delete successfull");
+            listAccount = _bankAccountRepository.GetAll();
             dgvListStudent.DataSource = new BindingSource()
             {
                 DataSource = listAccount
@@ -274,13 +281,27 @@ namespace WinFormsApp3
             //chuột đang click ở dòng nào
             rowIndex = e.RowIndex;
             var account = _bankAccountRepository.GetAll()[e.RowIndex];
+            var typeID = account.TypeId;
+            var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeId.Equals(typeID)).FirstOrDefault();
             //_bankAccountRepository.Delete(account);
 
             txtBankAccountID.Text = account.AccountId.ToString();
             txtAccountName.Text = account.AccountName.ToString();
             txtBrandName.Text = account.BranchName.ToString();
             txtOpenDate.Text = account.OpenDate.ToString();
-            txtTypeID.Text = account.TypeId.ToString();
+            if (accountType != null)
+            {
+                txtTypeID.Text = accountType.TypeDesc.ToString();
+            }
+            else
+            {
+                txtTypeID.Text = "None";
+            }
+        }
+
+        private void cBTypeName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
