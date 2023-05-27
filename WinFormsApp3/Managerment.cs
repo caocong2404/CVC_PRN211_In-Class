@@ -75,6 +75,7 @@ namespace WinFormsApp3
             bankAccount.AccountName = name;
             bankAccount.BranchName = brand;
             bankAccount.OpenDate = DateTime.Now;
+            //get account type name
             AccountType accountType = cBTypeName.SelectedItem as AccountType;
             
                 bankAccount.TypeId = accountType.TypeId;

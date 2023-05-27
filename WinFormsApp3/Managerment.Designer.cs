@@ -60,16 +60,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvListStudent).BeginInit();
             SuspendLayout();
             // 
-            // txtManagerment
-            // 
-            txtManagerment.AutoSize = true;
-            txtManagerment.Location = new Point(317, 16);
-            txtManagerment.Name = "txtManagerment";
-            txtManagerment.Size = new Size(141, 15);
-            txtManagerment.TabIndex = 0;
-            txtManagerment.Text = "Welcome to our program";
-            txtManagerment.Click += txtManagerment_Click;
-            // 
             // dgvListStudent
             // 
             dgvListStudent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
