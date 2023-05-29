@@ -19,6 +19,8 @@ namespace WinFormsApp3
         UserRepository _userRepository;
         AccountTypeRepository _accountTypeRepository;
 
+        private int rowIndex { get; set; }
+
         List<Student> listStudent = new List<Student>();
         int pre_ID;
         public Managerment()
@@ -52,11 +54,6 @@ namespace WinFormsApp3
             cBTypeName.DisplayMember = "TypeName";
         }
 
-        private void txtManagerment_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void dgvListStudent_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -77,9 +74,9 @@ namespace WinFormsApp3
             bankAccount.OpenDate = DateTime.Now;
             //get account type name
             AccountType accountType = cBTypeName.SelectedItem as AccountType;
-            
-                bankAccount.TypeId = accountType.TypeId;
-       
+
+            bankAccount.TypeId = accountType.TypeId;
+
             _bankAccountRepository.Add(bankAccount);
             var bankAccountList = _bankAccountRepository.GetAll();
 
@@ -128,7 +125,6 @@ namespace WinFormsApp3
 
         }
 
-        private int rowIndex { get; set; }
         private void dgvListStudent_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //chuột đang click ở dòng nào
@@ -171,40 +167,63 @@ namespace WinFormsApp3
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            //chuột đang click ở dòng nào
-            //listStudent[rowIndex].Name = txtName.Text;
-            //listStudent[rowIndex].Age = int.Parse(txtAge.Text);
-            var student = listStudent[rowIndex];
-            if (txtAge.Text.Length <= 0 || txtName.Text.Length <= 0)
+            var listAccount = _bankAccountRepository.GetAll();
+
+            if (txtAccountName.Text.Length <= 0 || txtBrandName.Text.Length <= 0)
             {
                 MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
                 return;
             }
 
-            try
-            {
-                student.Age = int.Parse(txtAge.Text);
-            }
-            catch
-            {
-                MessageBox.Show("Age must be a word", "Thong bao", MessageBoxButtons.OK);
-                txtName.Text = "";
-                txtAge.Text = "";
-                return;
-            }
-            if (student.Age <= 0)
-            {
-                MessageBox.Show("Age must be more than 0", "Thong bao", MessageBoxButtons.OK);
-                return;
-            }
-            student.Name = txtName.Text;
-
+            listAccount[rowIndex].AccountName = txtAccountName.Text;
+            listAccount[rowIndex].BranchName = txtBrandName.Text;
+            
+            //get type name to type ID
+            AccountType accounType = cBTypeName.SelectedItem as AccountType;
+            var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeName.Equals(accounType.TypeName)).FirstOrDefault();
+            listAccount[rowIndex].TypeId = accountType.TypeId;
             dgvListStudent.DataSource = new BindingSource()
             {
-                DataSource = listStudent
+                DataSource = listAccount
             };
-            txtName.Text = "";
-            txtAge.Text = "";
+            txtAccountName.Text = "";
+            txtBrandName.Text = "";
+
+
+            //var student = listStudent[rowIndex];
+            //if (txtAge.Text.Length <= 0 || txtName.Text.Length <= 0)
+            //{
+            //    MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
+            //    return;
+            //}
+
+            //try
+            //{
+            //    student.Age = int.Parse(txtAge.Text);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Age must be a word", "Thong bao", MessageBoxButtons.OK);
+            //    txtName.Text = "";
+            //    txtAge.Text = "";
+            //    return;
+            //}
+            //if (student.Age <= 0)
+            //{
+            //    MessageBox.Show("Age must be more than 0", "Thong bao", MessageBoxButtons.OK);
+            //    return;
+            //}
+            ////chuột đang click ở dòng nào
+            ////listStudent[rowIndex].Name = txtName.Text;
+            ////listStudent[rowIndex].Age = int.Parse(txtAge.Text);
+            //student.Name = txtName.Text;
+
+            //dgvListStudent.DataSource = new BindingSource()
+            //{
+            //    DataSource = listStudent
+            //};
+            //txtName.Text = "";
+            //txtAge.Text = "";
 
         }
 
@@ -300,9 +319,5 @@ namespace WinFormsApp3
             }
         }
 
-        private void cBTypeName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -60,6 +60,13 @@
             ((System.ComponentModel.ISupportInitialize)dgvListStudent).BeginInit();
             SuspendLayout();
             // 
+            // txtManagerment
+            // 
+            txtManagerment.Location = new Point(0, 0);
+            txtManagerment.Name = "txtManagerment";
+            txtManagerment.Size = new Size(100, 23);
+            txtManagerment.TabIndex = 32;
+            // 
             // dgvListStudent
             // 
             dgvListStudent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -167,7 +174,7 @@
             txtAccountName.Location = new Point(492, 307);
             txtAccountName.Name = "txtAccountName";
             txtAccountName.Size = new Size(277, 23);
-            txtAccountName.TabIndex = 13;
+            txtAccountName.TabIndex = 31;
             // 
             // txtBrandName
             // 
@@ -296,20 +303,16 @@
             label12.AutoSize = true;
             label12.Location = new Point(401, 397);
             label12.Name = "label12";
-            label12.Size = new Size(44, 15);
+            label12.Size = new Size(63, 15);
             label12.TabIndex = 30;
-            label12.Text = "label12";
+            label12.Text = "TypeName";
             // 
             // cBTypeName
             // 
-            cBTypeName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cBTypeName.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cBTypeName.FormattingEnabled = true;
             cBTypeName.Location = new Point(492, 394);
             cBTypeName.Name = "cBTypeName";
             cBTypeName.Size = new Size(277, 23);
-            cBTypeName.TabIndex = 31;
-            cBTypeName.SelectedIndexChanged += cBTypeName_SelectedIndexChanged;
+            cBTypeName.TabIndex = 0;
             // 
             // Managerment
             // 
