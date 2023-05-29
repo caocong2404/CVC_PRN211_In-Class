@@ -182,6 +182,10 @@ namespace WinFormsApp3
             AccountType accounType = cBTypeName.SelectedItem as AccountType;
             var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeName.Equals(accounType.TypeName)).FirstOrDefault();
             listAccount[rowIndex].TypeId = accountType.TypeId;
+            var bankAccountUpdate = listAccount[rowIndex];
+            //update
+            _bankAccountRepository.Update(bankAccountUpdate);
+
             dgvListStudent.DataSource = new BindingSource()
             {
                 DataSource = listAccount
