@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -303,12 +304,16 @@ namespace WinFormsApp3
         private void dgvListStudent_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //chuột đang click ở dòng nào
+            var accountID = dgvListStudent[0, e.RowIndex].Value;
+            var account = _bankAccountRepository.GetAll().Where(entity => entity.AccountId.Equals(accountID)).FirstOrDefault() ;
+            if (account == null)
+                return;
+            
             rowIndex = e.RowIndex;
-            var account = _bankAccountRepository.GetAll()[e.RowIndex];
             var typeID = account.TypeId;
             var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeId.Equals(typeID)).FirstOrDefault();
             //_bankAccountRepository.Delete(account);
-
+            cBTypeName.Text = accountType.TypeName;
             txtBankAccountID.Text = account.AccountId.ToString();
             txtAccountName.Text = account.AccountName.ToString();
             txtBrandName.Text = account.BranchName.ToString();
