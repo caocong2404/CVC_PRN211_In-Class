@@ -59,7 +59,6 @@ namespace WinFormsApp3
         {
 
         }
-
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string name = txtAccountName.Text;
@@ -67,6 +66,17 @@ namespace WinFormsApp3
             if (name.Length <= 0 || brand.Length <= 0)
             {
                 MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
+                return;
+            }
+            if (int.TryParse(name, out int checkName))
+            {
+                MessageBox.Show("Account name can not be number", "Thong bao", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (int.TryParse(brand, out int checkBrand))
+            {
+                MessageBox.Show("Brand name can not be number", "Thong bao", MessageBoxButtons.OK);
                 return;
             }
             var bankAccount = new BankAccount();
@@ -129,11 +139,28 @@ namespace WinFormsApp3
         private void dgvListStudent_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //chuột đang click ở dòng nào
+            var accountID = dgvListStudent[0, e.RowIndex].Value;
+            var account = _bankAccountRepository.GetAll().Where(entity => entity.AccountId.Equals(accountID)).FirstOrDefault();
+            if (account == null)
+                return;
+
             rowIndex = e.RowIndex;
-            var student = listStudent[e.RowIndex];
-            txtID.Text = student.Id.ToString();
-            txtName.Text = student.Name.ToString();
-            txtAge.Text = student.Age + "";
+            var typeID = account.TypeId;
+            var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeId.Equals(typeID)).FirstOrDefault();
+            //_bankAccountRepository.Delete(account);
+            cBTypeName.Text = accountType.TypeName;
+            txtBankAccountID.Text = account.AccountId.ToString();
+            txtAccountName.Text = account.AccountName.ToString();
+            txtBrandName.Text = account.BranchName.ToString();
+            txtOpenDate.Text = account.OpenDate.ToString();
+            if (accountType != null)
+            {
+                txtTypeID.Text = accountType.TypeDesc.ToString();
+            }
+            else
+            {
+                txtTypeID.Text = "None";
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -145,15 +172,25 @@ namespace WinFormsApp3
             {
                 return;
             }
-            var listAccount = _bankAccountRepository.GetAll();
-            var account = listAccount[rowIndex];
+            var accountID = dgvListStudent[0, rowIndex].Value;
+            var account = _bankAccountRepository.GetAll().Where(entity => entity.AccountId.Equals(accountID)).FirstOrDefault();
+            //var listAccount = _bankAccountRepository.GetAll();
+            //var account = listAccount[rowIndex];
             _bankAccountRepository.Delete(account);
             MessageBox.Show("Delete successfull");
-            listAccount = _bankAccountRepository.GetAll();
+            var listAccount = _bankAccountRepository.GetAll();
             dgvListStudent.DataSource = new BindingSource()
             {
                 DataSource = listAccount
             };
+            txtBankAccountID.Text = "";
+            txtAccountName.Text = "";
+            txtBankAccountID.Text = "";
+            txtBrandName.Text = "";
+            txtOpenDate.Text = "";
+            txtTypeID.Text = "";
+
+
             /*
             listStudent.Remove(listStudent[rowIndex]);
 
@@ -169,16 +206,30 @@ namespace WinFormsApp3
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             var listAccount = _bankAccountRepository.GetAll();
+            var name = txtAccountName.Text;
+            var brand = txtBrandName.Text;
 
             if (txtAccountName.Text.Length <= 0 || txtBrandName.Text.Length <= 0)
+                if (name.Length <= 0 || brand.Length <= 0)
+                {
+                    MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
+                    return;
+                }
+            if (int.TryParse(name, out int checkName))
             {
-                MessageBox.Show("Textbox can not empty", "Thong bao", MessageBoxButtons.OK);
+                MessageBox.Show("Account name can not be number", "Thong bao", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (int.TryParse(brand, out int checkBrand))
+            {
+                MessageBox.Show("Brand name can not be number", "Thong bao", MessageBoxButtons.OK);
                 return;
             }
 
             listAccount[rowIndex].AccountName = txtAccountName.Text;
             listAccount[rowIndex].BranchName = txtBrandName.Text;
-            
+
             //get type name to type ID
             AccountType accounType = cBTypeName.SelectedItem as AccountType;
             var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeName.Equals(accounType.TypeName)).FirstOrDefault();
@@ -303,30 +354,12 @@ namespace WinFormsApp3
 
         private void dgvListStudent_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //chuột đang click ở dòng nào
-            var accountID = dgvListStudent[0, e.RowIndex].Value;
-            var account = _bankAccountRepository.GetAll().Where(entity => entity.AccountId.Equals(accountID)).FirstOrDefault() ;
-            if (account == null)
-                return;
-            
-            rowIndex = e.RowIndex;
-            var typeID = account.TypeId;
-            var accountType = _accountTypeRepository.GetAll().Where(entity => entity.TypeId.Equals(typeID)).FirstOrDefault();
-            //_bankAccountRepository.Delete(account);
-            cBTypeName.Text = accountType.TypeName;
-            txtBankAccountID.Text = account.AccountId.ToString();
-            txtAccountName.Text = account.AccountName.ToString();
-            txtBrandName.Text = account.BranchName.ToString();
-            txtOpenDate.Text = account.OpenDate.ToString();
-            if (accountType != null)
-            {
-                txtTypeID.Text = accountType.TypeDesc.ToString();
-            }
-            else
-            {
-                txtTypeID.Text = "None";
-            }
+
         }
 
+        private void Managerment_ContextMenuStripChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

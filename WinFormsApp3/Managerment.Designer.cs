@@ -350,6 +350,7 @@
             Controls.Add(txtManagerment);
             Name = "Managerment";
             Text = "Managerment";
+            ContextMenuStripChanged += Managerment_ContextMenuStripChanged;
             ((System.ComponentModel.ISupportInitialize)dgvListStudent).EndInit();
             ResumeLayout(false);
             PerformLayout();
